@@ -113,17 +113,7 @@ export const ProjectDetail: React.FC = () => {
     } catch (err) { console.error(err); }
   };
 
-  const statusCls: Record<string, string> = {
-    TODO: 'badge-todo',
-    IN_PROGRESS: 'badge-inprogress',
-    DONE: 'badge-done',
-  };
 
-  const statusLabel: Record<string, string> = {
-    TODO: 'To Do',
-    IN_PROGRESS: 'In Progress',
-    DONE: 'Done',
-  };
 
   const priorityColor: Record<string, string> = {
     HIGH: '#ef4444', MEDIUM: '#fb923c', LOW: '#34d399',

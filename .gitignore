@@ -1,0 +1,10 @@
+node_modules
+.DS_Store
+.env
+*.log
+dist
+build
+backend/dev.db
+backend/dev.db-journal
+frontend/dist
+.vscode

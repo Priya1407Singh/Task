@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Sidebar } from '../components/Sidebar';
 import { useAuth } from '../context/AuthContext';
-import { Info, User, Save } from 'lucide-react';
+import { Info, User } from 'lucide-react';
 import './Profile.css';
 
 const AVATARS = [
