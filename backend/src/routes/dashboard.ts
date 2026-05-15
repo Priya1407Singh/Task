@@ -3,7 +3,13 @@ import { PrismaClient } from '@prisma/client';
 import { authenticateToken, AuthRequest } from '../middleware/auth';
 
 const router = Router();
-const prisma = new PrismaClient();
+const prisma = new PrismaClient({
+  datasources: {
+    db: {
+      url: process.env.DATABASE_URL,
+    },
+  },
+});
 
 router.use(authenticateToken);
 
@@ -54,6 +60,7 @@ router.get('/', async (req: AuthRequest, res: Response): Promise<void> => {
       overdueTasks
     });
   } catch (error) {
+    console.error('Dashboard error:', error);
     res.status(500).json({ error: 'Server error' });
   }
 });

@@ -3,7 +3,13 @@ import { PrismaClient } from '@prisma/client';
 import { authenticateToken, AuthRequest } from '../middleware/auth';
 
 const router = Router();
-const prisma = new PrismaClient();
+const prisma = new PrismaClient({
+  datasources: {
+    db: {
+      url: process.env.DATABASE_URL,
+    },
+  },
+});
 
 router.use(authenticateToken);
 
@@ -26,6 +32,7 @@ router.post('/', async (req: AuthRequest, res: Response): Promise<void> => {
 
     res.status(201).json(project);
   } catch (error) {
+    console.error('Project create error:', error);
     res.status(500).json({ error: 'Server error' });
   }
 });
@@ -48,6 +55,7 @@ router.get('/', async (req: AuthRequest, res: Response): Promise<void> => {
 
     res.json(projects);
   } catch (error) {
+    console.error('Projects get error:', error);
     res.status(500).json({ error: 'Server error' });
   }
 });
@@ -84,6 +92,7 @@ router.get('/:id', async (req: AuthRequest, res: Response): Promise<void> => {
 
     res.json(project);
   } catch (error) {
+    console.error('Project get error:', error);
     res.status(500).json({ error: 'Server error' });
   }
 });
@@ -135,6 +144,7 @@ router.post('/:id/members', async (req: AuthRequest, res: Response): Promise<voi
 
     res.status(201).json(member);
   } catch (error) {
+    console.error('Member add error:', error);
     res.status(500).json({ error: 'Server error' });
   }
 });
@@ -161,6 +171,7 @@ router.delete('/:id/members/:userId', async (req: AuthRequest, res: Response): P
 
     res.json({ message: 'Member removed' });
   } catch (error) {
+    console.error('Member remove error:', error);
     res.status(500).json({ error: 'Server error' });
   }
 });

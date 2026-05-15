@@ -3,7 +3,13 @@ import { PrismaClient } from '@prisma/client';
 import { authenticateToken, AuthRequest } from '../middleware/auth';
 
 const router = Router();
-const prisma = new PrismaClient();
+const prisma = new PrismaClient({
+  datasources: {
+    db: {
+      url: process.env.DATABASE_URL,
+    },
+  },
+});
 
 router.use(authenticateToken);
 
@@ -37,6 +43,7 @@ router.post('/', async (req: AuthRequest, res: Response): Promise<void> => {
 
     res.status(201).json(task);
   } catch (error) {
+    console.error('Task create error:', error);
     res.status(500).json({ error: 'Server error' });
   }
 });
@@ -66,6 +73,7 @@ router.get('/project/:projectId', async (req: AuthRequest, res: Response): Promi
 
     res.json(tasks);
   } catch (error) {
+    console.error('Tasks get error:', error);
     res.status(500).json({ error: 'Server error' });
   }
 });
@@ -83,6 +91,7 @@ router.put('/:id', async (req: AuthRequest, res: Response): Promise<void> => {
 
     res.json(task);
   } catch (error) {
+    console.error('Task update error:', error);
     res.status(500).json({ error: 'Server error' });
   }
 });
