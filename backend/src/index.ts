@@ -10,6 +10,11 @@ import dashboardRoutes from './routes/dashboard';
 dotenv.config();
 
 const app = express();
+console.log('Checking environment variables...');
+console.log('DATABASE_URL is defined:', !!process.env.DATABASE_URL);
+if (!process.env.DATABASE_URL) {
+  console.error('CRITICAL ERROR: DATABASE_URL is missing from environment variables!');
+}
 
 app.use(cors());
 app.use(express.json());
