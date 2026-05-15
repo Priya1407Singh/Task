@@ -24,7 +24,7 @@ router.post('/signup', async (req: Request, res: Response): Promise<void> => {
     const token = jwt.sign({ id: user.id, email: user.email }, process.env.JWT_SECRET || 'supersecretkey123', { expiresIn: '1d' });
     
     res.status(201).json({ token, user: { id: user.id, name: user.name, email: user.email } });
-  } catch (error) {
+    console.error('Signup error:', error);
     res.status(500).json({ error: 'Server error' });
   }
 });
@@ -48,7 +48,7 @@ router.post('/login', async (req: Request, res: Response): Promise<void> => {
     const token = jwt.sign({ id: user.id, email: user.email }, process.env.JWT_SECRET || 'supersecretkey123', { expiresIn: '1d' });
     
     res.json({ token, user: { id: user.id, name: user.name, email: user.email } });
-  } catch (error) {
+    console.error('Login error:', error);
     res.status(500).json({ error: 'Server error' });
   }
 });
