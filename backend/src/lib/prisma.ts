@@ -2,16 +2,24 @@ import { PrismaClient } from '@prisma/client';
 import dotenv from 'dotenv';
 dotenv.config();
 
-console.log('Available Env Vars:', Object.keys(process.env).filter(key => !key.includes('SECRET') && !key.includes('PASSWORD')));
-console.log('DATABASE_URL present:', !!process.env.DATABASE_URL);
+// Detailed Debugging
+const allKeys = Object.keys(process.env);
+console.log('--- ENV DEBUG START ---');
+console.log('Total Env Vars:', allKeys.length);
+console.log('Search for DATABASE:', allKeys.filter(k => k.toLowerCase().includes('database')));
+console.log('Search for URL:', allKeys.filter(k => k.toLowerCase().includes('url')));
+console.log('--- ENV DEBUG END ---');
 
-// Use a placeholder if missing just to prevent crash during boot so we can see logs
-const dbUrl = process.env.DATABASE_URL || "postgresql://dummy:dummy@localhost:5432/dummy";
+const dbUrl = process.env.DATABASE_URL;
+
+if (!dbUrl) {
+  console.error('FATAL: DATABASE_URL is absolutely missing from process.env!');
+}
 
 const prisma = new PrismaClient({
   datasources: {
     db: {
-      url: dbUrl,
+      url: dbUrl || "postgresql://dummy:dummy@localhost:5432/dummy",
     },
   },
 });
