@@ -145,7 +145,11 @@ export const Team: React.FC = () => {
                 <div className="form-group">
                   <label>Select Project</label>
                   <select className="modal-input" value={selectedProjectId} onChange={e => setSelectedProjectId(e.target.value)} required>
-                    {projects.map(p => <option key={p.id} value={p.id}>{p.name}</option>)}
+                    {projects.length === 0 ? (
+                      <option value="" disabled>Please create a project first</option>
+                    ) : (
+                      projects.map(p => <option key={p.id} value={p.id}>{p.name}</option>)
+                    )}
                   </select>
                 </div>
                 <div className="form-group">
